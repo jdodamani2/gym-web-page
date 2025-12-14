@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaja Gym Power House</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  
+
+  <script>
+    // 🔥 Firebase Config (REPLACE WITH YOURS)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "XXXX",
+      appId: "XXXX"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function bookMembership() {
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const plan = document.getElementById('plan').value;
+      const slot = document.getElementById('slot').value;
+
+      if (!name || !phone || !plan || !slot) {
+        alert('Fill all details. Discipline first.');
+        return;
+      }
+
+      // Save to Firebase
+      db.ref('members').push({ name, phone, plan, slot, date: new Date().toISOString() });
+
+      // WhatsApp Auto Booking
+      const msg = `Hi Gaja Gym Power House,%0A%0AI want to JOIN and lock my slot.%0A%0AName: ${name}%0APhone: ${phone}%0APlan Interested: ${plan}%0APreferred Slot: ${slot}%0A%0APlease confirm availability and visit time.`;
+      window.open(`https://wa.me/918880916210?text=${msg}`, '_blank');
+
+      
+    }
+  </script>
+</head>
+<body class="bg-black text-white">
+
+<!-- HERO -->
+<section class="min-h-screen flex flex-col justify-center items-center text-center bg-[radial-gradient(circle_at_top,_#7f1d1d,_#000)]">
+  <h1 class="text-6xl md:text-8xl font-extrabold tracking-widest">GAJA GYM</h1>
+  <p class="mt-4 text-red-500 text-2xl">Power house</p>
+  <p class="mt-6 max-w-2xl text-gray-300">Luxury strength training for people who don’t make excuses.</p>
+  <a href="#join" class="mt-10 px-10 py-4 bg-red-600 hover:bg-red-700 rounded-full text-xl font-bold">BOOK MEMBERSHIP</a>
+</section>
+
+<!-- PREMIUM GYM GALLERY -->
+<section class="py-24 bg-black px-8">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-14">INSIDE GAJA GYM POWER HOUSE</h2>
+    <div class="max-w-4xl mx-auto mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 justify-items-center">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT15wfEFlPUZUW969hykzCX0L31BBmiTFWscA&s" class="rounded-2xl shadow-2xl hover:scale-105 transition duration-300" alt="Gym Image 1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLTjJv-DgoIJ_mNLLK03eCsKsQRvYharemqg&s" class="rounded-2xl shadow-2xl hover:scale-105 transition duration-300" alt="Gym Image 1">
+      <img src="https://render.fineartamerica.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/2-watercolor-weight-lifter-woman-quote-watercolor-print-female-weightlifter-gift-motivational-quote-wa-leith-huber.jpg" class="rounded-2xl shadow-2xl hover:scale-105 transition duration-300" alt="Gym Image 4">
+      <img src="data:image/jpeg;base64,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" class="rounded-2xl shadow-2xl hover:scale-105 transition duration-300" alt="Gym Image 1">
+    </div>
+    <p class="text-center text-gray-400 mt-10">Premium equipment. Serious atmosphere. No compromises.</p>
+  </div>
+</section>
+
+<!-- Centered Medium Square Video -->
+<div class="flex justify-center items-center mt-8">
+  <video class="w-64 h-64 object-cover rounded-lg shadow-lg" controls>
+    <source src="C:\Users\Admin\OneDrive\Desktop\gym websiite\videos\gym_video.mp4.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- FEATURES -->
+<section class="py-20 grid md:grid-cols-4 gap-6 px-10">
+  <div class="bg-gray-900 p-6 rounded-xl">🏋 Elite Machines</div>
+  <div class="bg-gray-900 p-6 rounded-xl">🔥 Fat Loss Programs</div>
+  <div class="bg-gray-900 p-6 rounded-xl">🥊 Personal Training</div>
+  <div class="bg-gray-900 p-6 rounded-xl">💎 Premium Ambience</div>
+</section>
+
+<!-- JOIN -->
+<section id="join" class="py-20 bg-gray-950">
+  <h2 class="text-center text-4xl font-bold mb-10">JOIN THE POWER</h2>
+  <div class="max-w-xl mx-auto bg-black p-8 rounded-xl">
+    <input id="name" placeholder="Full Name" class="w-full mb-3 p-3 bg-gray-800 rounded" />
+    <input id="phone" placeholder="Phone Number" class="w-full mb-3 p-3 bg-gray-800 rounded" />
+    <select id="plan" class="w-full mb-3 p-3 bg-gray-800 rounded">
+      <option value="">Select Plan</option>
+      <option>Monthly</option>
+      <option>Quarterly</option>
+      <option>Yearly</option>
+    </select>
+    <select id="slot" class="w-full mb-6 p-3 bg-gray-800 rounded">
+      <option value="">Choose Slot</option>
+      <option>Morning (5AM–9AM)</option>
+      <option>Evening (5PM–10PM)</option>
+    </select>
+    <button onclick="bookMembership()" class="w-full py-4 bg-red-600 hover:bg-red-700 font-bold rounded">BOOK VIA WHATSAPP</button>
+  </div>
+<script>
+  function addMemberManual() {
+    const name = document.getElementById('o_name').value;
+    const phone = document.getElementById('o_phone').value;
+    const plan = document.getElementById('o_plan').value;
+    const slot = document.getElementById('o_slot').value;
+
+    if (!name || !phone || !plan || !slot) {
+      alert('Owner: fill all member details');
+      return;
+    }
+
+    db.ref('members').push({ name, phone, plan, slot, addedBy: 'owner', date: new Date().toISOString() });
+
+    document.getElementById('o_name').value = '';
+    document.getElementById('o_phone').value = '';
+    document.getElementById('o_plan').value = '';
+    document.getElementById('o_slot').value = '';
+  }
+
+  // Load Members
+  db.ref('members').on('value', snapshot => {
+    const list = document.getElementById('memberList');
+    list.innerHTML = '';
+    snapshot.forEach(child => {
+      const m = child.val();
+      const li = document.createElement('li');
+      li.className = 'border-b border-gray-700 pb-2';
+      li.innerHTML = `<strong>${m.name}</strong><br>📞 ${m.phone}<br>📦 ${m.plan} | ⏰ ${m.slot}`;
+      list.prepend(li);
+    });
+  });
+</script>
+
+<!-- INSTAGRAM -->
+<section class="py-16 text-center">
+  <a href="https://www.instagram.com/gaja_gym_powerhouse?igsh=N3doZ3FwcjFqNnc=" target="_blank" class="text-red-600 text-xl underline">Instagram →</a>
+</section>
+
+<footer class="py-6 text-center text-gray-500">© 2025 Gaja Gym Power House</footer>
+
+</body>
+</html>
